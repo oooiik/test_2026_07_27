@@ -1,5 +1,5 @@
 # BASE
-FROM php:8.1 AS base
+FROM php:8.1-fpm AS base
 
 RUN apt-get update
 
@@ -11,6 +11,10 @@ RUN docker-php-ext-install zip
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 WORKDIR /app
+
+EXPOSE 9000
+
+CMD ["php-fpm"]
 
 
 # DEV

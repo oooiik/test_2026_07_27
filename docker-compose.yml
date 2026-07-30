@@ -1,4 +1,12 @@
 services:
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./docker/nginx/templates/:/etc/nginx/templates
+      - "./:/app"
+    ports:
+      - "8000:80"
+
   app:
     image: app
     build:
@@ -8,4 +16,3 @@ services:
     volumes:
       - ./:/app
     user: ${UGID}
-    command: tail -f /dev/null
