@@ -1,0 +1,11 @@
+services:
+  app:
+    image: app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: dev
+    volumes:
+      - ./:/app
+    user: ${UGID}
+    command: tail -f /dev/null
