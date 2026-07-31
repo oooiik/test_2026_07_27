@@ -6,6 +6,8 @@ services:
       - "./:/app"
     ports:
       - "8000:80"
+    networks:
+      - default
 
   app:
     image: app
@@ -13,6 +15,26 @@ services:
       context: .
       dockerfile: Dockerfile
       target: dev
+    env_file: .env
     volumes:
       - ./:/app
     user: ${UGID}
+    networks:
+      - default
+
+  mysql:
+    image: mysql:8.0
+    env_file: .env
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - default
+
+networks:
+  default:
+    driver: bridge
+    external: false
+
+volumes:
+  db_data:

@@ -6,7 +6,8 @@ RUN apt-get update
 RUN apt-get install -y  \
     libzip-dev
 
-RUN docker-php-ext-install zip
+RUN docker-php-ext-install zip pdo pdo_mysql \
+    && docker-php-ext-enable pdo pdo_mysql
 
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 

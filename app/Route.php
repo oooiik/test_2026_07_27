@@ -9,6 +9,8 @@ use App\Controller\HomeController;
 class Route
 {
   protected string $uri;
+  /** @var array<string, ControllerInterface> */
+  protected array $routes = [];
 
   public function __construct()
   {
@@ -17,21 +19,25 @@ class Route
     if ($uri === '') $uri = '/';
     $this->uri = $uri;
   }
-  protected function routes(): array
+
+  public function initControllers(
+    HomeController $homeController,
+    ErrorController $errorController,
+  ): static
   {
-    return [
-      '/' => HomeController::class
+    $this->routes = [
+      '/' => $homeController,
+      '*' => $errorController,
     ];
+    return $this;
   }
 
   public function getController(): ControllerInterface
   {
-    $view = new View();
-    if (array_key_exists($this->uri, $this->routes())) {
-      $ref = new \ReflectionClass($this->routes()[$this->uri]);
-      return $ref->newInstance($view);
+    if (array_key_exists($this->uri, $this->routes)) {
+      return $this->routes[$this->uri];
     }
-    return new ErrorController($view);
+    return $this->routes['*'];
   }
 
   // TODO middleware
