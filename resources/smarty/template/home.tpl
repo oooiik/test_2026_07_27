@@ -1,16 +1,29 @@
-{$smarty.now}
+{extends file='layout/layout.tpl'}
 
-{foreach $data as $d}
-    <br>
-    <h3>
-        {$d['category']->getId()} => {$d['category']->getName()}
-    </h3>
-    {foreach $d['lastArticles'] as $article}
-        <br>
-        <h4>
-            {$article['article']->getName()}
-        </h4>
-        <img src="{$article['image_url']}" alt="">
-        {$article['article']->getText()}
+{block name='title'}Blogy — Blog Categories{/block}
+
+{block name='content'}
+    {foreach $data as $d}
+        <section class="category">
+            <div class="container">
+                <div class="category__header">
+                    <h2 class="category__title">{$d['category']->getName()}</h2>
+                    <a href="#" class="view-all">View All</a>
+                </div>
+
+                <div class="card-grid">
+                    {foreach $d['lastArticles'] as $article}
+                        <article class="card">
+                            <a href="#" class="card__image" style="background-image: url('{$article['image_url']}')" aria-label="Read: {$article['article']->getName()}"></a>
+                            <div class="card__body">
+                                <h3 class="card__title"><a href="#">{$article['article']->getName()}</a></h3>
+                                <p class="card__excerpt">{$article['article']->getDescription()}</p>
+                                <a href="#" class="card__link">Continue Reading</a>
+                            </div>
+                        </article>
+                    {/foreach}
+                </div>
+            </div>
+        </section>
     {/foreach}
-{/foreach}
+{/block}
