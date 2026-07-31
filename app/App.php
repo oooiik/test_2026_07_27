@@ -35,7 +35,7 @@ class App
     $this->filesystem = new Filesystem(new LocalFilesystemAdapter(
       __ROOT__. '/public/assets/' // public for image
     ), [
-      ['public_url' => getenv('ASSETS_URL')]
+      'public_url' => getenv('ASSETS_URL')
     ]);
 
     $dbHost = getenv('MYSQL_HOST');
@@ -52,7 +52,12 @@ class App
 
     $this->serviceImage = new ImageService($this->filesystem, $this->repoImage);
 
-    $controllerHome = new HomeController($view, $this->repoCategory, $this->repoArticle);
+    $controllerHome = new HomeController(
+      $view,
+      $this->repoCategory,
+      $this->repoArticle,
+      $this->serviceImage
+    );
     $controllerError = new ErrorController($view);
 
     $this->route = new Route();

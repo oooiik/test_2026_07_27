@@ -59,6 +59,12 @@ class ImageService
     return $this->filesystem->publicUrl($image->getPath());
   }
 
+  public function getUrlById(int $id): string
+  {
+    $image = $this->repositoryImage->getById($id);
+    return $this->filesystem->publicUrl($image->getPath());
+  }
+
   protected function generatePath(string $extension): string
   {
     return bin2hex(random_bytes(16)) . '.' . $extension;

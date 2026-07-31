@@ -8,8 +8,9 @@
     {foreach $d['lastArticles'] as $article}
         <br>
         <h4>
-            {$article->getName()}
+            {$article['article']->getName()}
         </h4>
-        {$article->getText()}
+        <img src="{$article['image_url']}" alt="">
+        {$article['article']->getText()}
     {/foreach}
 {/foreach}

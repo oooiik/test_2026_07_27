@@ -24,4 +24,10 @@ class ImageRepository
     $res = $this->db->queryOne("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
     return Image::restore($res['id'], $res['path']);
   }
+
+  public function getById(int $id): Image
+  {
+    $res = $this->db->queryOne("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
+    return Image::restore($res['id'], $res['path']);
+  }
 }
