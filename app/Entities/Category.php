@@ -7,14 +7,15 @@ class Category
   public function __construct(
     protected int $id,
     protected string $name,
-    protected ?string $description = null
+    protected ?string $description = null,
+    protected ?string $createdAt = null
   )
   {
   }
 
-  public function restore(int $id, string $name, ?string $description = null): static
+  public static function restore(int $id, string $name, ?string $description = null, $createdAt = null): static
   {
-    return new static($id, $name, $description);
+    return new static($id, $name, $description, $createdAt);
   }
 
   public function getId(): int

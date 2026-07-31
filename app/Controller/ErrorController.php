@@ -2,23 +2,13 @@
 
 namespace App\Controller;
 
-use Smarty\Smarty;
+use App\View;
 
-class ErrorController implements ControllerInterface
+class ErrorController extends Controller
 {
 
   public function handle($request): void
   {
-    $smartyDir = '/app/resources/smarty';
-    $smarty = new Smarty();
-    $smarty->setTemplateDir($smartyDir . '/template');
-    $smarty->setConfigDir($smartyDir . '/config');
-    $smarty->setCompileDir($smartyDir . '/compile');
-    $smarty->setCacheDir($smartyDir . '/cache');
-
-    $smarty->display('error_404.tpl');
-
-//    http_response_code(404);
-//    echo "Page not found. 404";
+    $this->view->display('error_404.tpl');
   }
 }
