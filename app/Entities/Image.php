@@ -6,14 +6,14 @@ class Image
 {
   public function __construct(
     protected int $id,
-    protected string $slug,
+    protected string $path,
   )
   {
   }
 
-  public static function restore(int $id, string $slug): static
+  public static function restore(int $id, string $path): static
   {
-    return new static($id, $slug);
+    return new static($id, $path);
   }
 
   public function getId(): int
@@ -21,9 +21,9 @@ class Image
     return $this->id;
   }
 
-  public function getSlug(): string
+  public function getPath(): string
   {
-    return $this->slug;
+    return $this->path;
   }
 
   // TODO

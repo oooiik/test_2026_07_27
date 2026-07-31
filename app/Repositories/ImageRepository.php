@@ -17,11 +17,11 @@ class ImageRepository
   {
     $id = $image->getId();
     if ($id == 0) { // Create
-      $id = $this->db->insertOne("INSERT INTO {$this->table} (slug) VALUES(?)", [$image->getSlug()]);
+      $id = $this->db->insertOne("INSERT INTO {$this->table} (path) VALUES(?)", [$image->getPath()]);
     } else { // update
-      $this->db->execute("UPDATE {$this->table} SET slug = ? WHERE id = ?", [$image->getSlug(), $image->getId()]);
+      $this->db->execute("UPDATE {$this->table} SET path = ? WHERE id = ?", [$image->getPath(), $image->getId()]);
     }
     $res = $this->db->queryOne("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
-    return Image::restore($res['id'], $res['slug']);
+    return Image::restore($res['id'], $res['path']);
   }
 }

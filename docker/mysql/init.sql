@@ -1,7 +1,7 @@
 CREATE TABLE images
 (
     id         int AUTO_INCREMENT PRIMARY KEY,
-    slug       varchar(255) NOT NULL,
+    path       varchar(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 ;
