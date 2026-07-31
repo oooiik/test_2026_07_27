@@ -11,7 +11,7 @@ class Image
   {
   }
 
-  public function restore(int $id, string $slug): static
+  public static function restore(int $id, string $slug): static
   {
     return new static($id, $slug);
   }

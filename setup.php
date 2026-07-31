@@ -1,8 +1,9 @@
 <?php
 
-require 'vendor/autoload.php';
+require 'bootstrap.php';
 
 use App\App;
 
 $app = new App();
-$app->run();
+$app->fresh();
+$app->seeder();

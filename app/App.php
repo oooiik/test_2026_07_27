@@ -4,14 +4,22 @@ namespace App;
 
 use App\Controller\ErrorController;
 use App\Controller\HomeController;
+use App\Entities\Article;
+use App\Entities\Category;
+use App\Entities\Image;
 use App\Repositories\ArticleRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ImageRepository;
+use Faker\Factory;
 
 class App
 {
   protected Route $route;
   protected Database $db;
+
+  protected ImageRepository $repoImage;
+  protected CategoryRepository $repoCategory;
+  protected ArticleRepository $repoArticle;
 
 
   public function __construct()
@@ -26,11 +34,11 @@ class App
 
     $this->db = new Database("mysql:host={$dbHost};port={$dbPort};dbname={$dbDbname};charset=utf8mb4", $dbUser, $dbPassword);
 
-    $repoImage = new ImageRepository($this->db);
-    $repoCategory = new CategoryRepository($this->db);
-    $repoArticle = new ArticleRepository($this->db);
+    $this->repoImage = new ImageRepository($this->db);
+    $this->repoCategory = new CategoryRepository($this->db);
+    $this->repoArticle = new ArticleRepository($this->db);
 
-    $controllerHome = new HomeController($view, $repoCategory, $repoArticle);
+    $controllerHome = new HomeController($view, $this->repoCategory, $this->repoArticle);
     $controllerError = new ErrorController($view);
 
     $this->route = new Route();
@@ -49,6 +57,36 @@ class App
     $controller->handle($_REQUEST);
     // TODO init route
     // route -> C -> M -> V -> C
+  }
+
+  public function seeder(): void
+  {
+    $faker = Factory::create();
+    for ($i = 0; $i < 5; $i++) {
+      $category = $this->repoCategory->save(new Category(0, $faker->word, $faker->text));
+      for ($k = 0; $k < 5; $k++) {
+        $image = $this->repoImage->save(new Image(0, $faker->slug));
+        $this->repoArticle->save(new Article(
+          0,
+          $faker->text(50),
+          $faker->text(300),
+          $category->getId(),
+          $faker->text(100),
+          0,
+          $image->getId(),
+        ));
+      }
+    }
+
+  }
+
+  public function fresh(): void
+  {
+    $this->db->execute('SET FOREIGN_KEY_CHECKS = 0');
+    $this->db->execute('TRUNCATE TABLE articles');
+    $this->db->execute('TRUNCATE TABLE categories');
+    $this->db->execute('TRUNCATE TABLE images');
+    $this->db->execute('SET FOREIGN_KEY_CHECKS = 1');
   }
 
 }

@@ -33,7 +33,7 @@ class HomeController extends Controller
     foreach ($categories as $category) {
       $data[] = [
         'category' => $category,
-        'lastArticles' => $this->repoArticle->loadWhereCategory($category->getId(), 5, 'DESC'),
+        'lastArticles' => $this->repoArticle->loadWhereCategory($category->getId(), 2, 'DESC'),
       ];
     }
 

@@ -1,13 +1,13 @@
 CREATE TABLE images
 (
-    id         int PRIMARY KEY,
+    id         int AUTO_INCREMENT PRIMARY KEY,
     slug       varchar(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 ;
 CREATE TABLE categories
 (
-    id          int PRIMARY KEY,
+    id          int AUTO_INCREMENT PRIMARY KEY,
     name        varchar(255) NOT NULL,
     description TEXT,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
@@ -15,7 +15,7 @@ CREATE TABLE categories
 
 CREATE TABLE articles
 (
-    id          int PRIMARY KEY,
+    id          int AUTO_INCREMENT PRIMARY KEY,
     name        varchar(255),
     text        TEXT NOT NULL,
     category_id int  NOT NULL,

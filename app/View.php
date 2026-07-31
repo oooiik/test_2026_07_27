@@ -16,7 +16,7 @@ class View extends Smarty
     $this->setCompileDir($smartyDir . '/compile');
     $this->setCacheDir($smartyDir . '/cache');
 
-    $this->caching = Smarty::CACHING_LIFETIME_CURRENT;
+    $this->caching = Smarty::CACHING_OFF;
     $this->assign('app_name', 'App');
   }
 }

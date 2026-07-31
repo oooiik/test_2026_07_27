@@ -34,6 +34,13 @@ class Database
     return $query->fetchAll();
   }
 
+  public function insertOne(string $sql, array $params = []): int
+  {
+    $query = $this->pdo->prepare($sql);
+    $query->execute($params);
+    return $this->pdo->lastInsertId();
+  }
+
   public function queryOne(string $sql, array $params = []): array|false
   {
     $query = $this->pdo->prepare($sql);

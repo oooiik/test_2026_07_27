@@ -7,6 +7,8 @@ use App\Entities\Article;
 
 class ArticleRepository
 {
+  protected string $table = 'articles';
+
   public function __construct(protected Database $db)
   {
   }
@@ -19,7 +21,8 @@ class ArticleRepository
    */
   public function loadWhereCategory(int $id, int $limit, string $order = 'ASC'): array
   {
-    $res = $this->db->query('SELECT * FROM articlies WHERE category_id = ? ORDER BY id ? LIMIT ?', [$id, $order, $limit]);
+    $order = strtoupper($order) === 'DESC' ? 'DESC' : 'ASC';
+    $res = $this->db->query("SELECT * FROM {$this->table} WHERE category_id = ? ORDER BY id {$order} LIMIT ?", [$id, $limit]);
     return array_map(fn($i) => new Article(
       id: $i['id'],
       name: $i['name'],
@@ -29,5 +32,46 @@ class ArticleRepository
       view_count: $i['view_count'],
       image_id: $i['image_id'],
     ), $res);
+  }
+
+  public function save(Article $article): Article
+  {
+    $id = $article->getId();
+    if ($id == 0) { // Create
+      $id = $this->db->insertOne(
+        "INSERT INTO {$this->table} (name, text, category_id, description, view_count, image_id) VALUES(?, ?, ?, ?, ?, ?)",
+        [
+          $article->getName(),
+          $article->getText(),
+          $article->getCategoryId(),
+          $article->getDescription(),
+          $article->getViewCount(),
+          $article->getImageId(),
+        ]
+      );
+    } else { // update
+      $this->db->execute(
+        "UPDATE {$this->table} SET name = ?, text = ?, category_id = ?, description = ?, view_count = ?, image_id = ? WHERE id = ?",
+        [
+          $article->getName(),
+          $article->getText(),
+          $article->getCategoryId(),
+          $article->getDescription(),
+          $article->getViewCount(),
+          $article->getImageId(),
+          $id,
+        ]
+      );
+    }
+    $res = $this->db->queryOne("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
+    return new Article(
+      id: $res['id'],
+      name: $res['name'],
+      text: $res['text'],
+      category_id: $res['category_id'],
+      description: $res['description'],
+      view_count: $res['view_count'],
+      image_id: $res['image_id'],
+    );
   }
 }

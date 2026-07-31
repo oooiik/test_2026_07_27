@@ -14,7 +14,7 @@ class Route
 
   public function __construct()
   {
-    $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+    $uri = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
     $uri = rtrim($uri, '/');
     if ($uri === '') $uri = '/';
     $this->uri = $uri;
