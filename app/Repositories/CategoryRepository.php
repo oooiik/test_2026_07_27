@@ -21,6 +21,17 @@ class CategoryRepository
     ), $res);
   }
 
+  public function getById(int $id): ?Category
+  {
+    $res = $this->db->queryOne("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
+    if ($res === false) {
+      return null;
+    }
+    return Category::restore(
+      id: $res['id'], name: $res['name'], description: $res['description'], createdAt: $res['created_at']
+    );
+  }
+
   public function save(Category $category): Category
   {
     $id = $category->getId();

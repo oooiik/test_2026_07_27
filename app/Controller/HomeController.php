@@ -28,7 +28,7 @@ class HomeController extends Controller
 
     $data = [];
     foreach ($categories as $category) {
-      $lastArticles = $this->repoArticle->loadWhereCategory($category->getId(), 2, 'DESC');
+      $lastArticles = $this->repoArticle->loadWhereCategory($category->getId(), 3, 'DESC');
       $articles = [];
       foreach ($lastArticles as $article) {
         $articles[] = [

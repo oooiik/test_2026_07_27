@@ -8,6 +8,7 @@ use App\Entities\Article;
 class ArticleRepository
 {
   protected string $table = 'articles';
+  protected const SORTABLE_COLUMNS = ['created_at', 'view_count'];
 
   public function __construct(protected Database $db)
   {
@@ -23,6 +24,39 @@ class ArticleRepository
   {
     $order = strtoupper($order) === 'DESC' ? 'DESC' : 'ASC';
     $res = $this->db->query("SELECT * FROM {$this->table} WHERE category_id = ? ORDER BY id {$order} LIMIT ?", [$id, $limit]);
+    return array_map(fn($i) => new Article(
+      id: $i['id'],
+      name: $i['name'],
+      text: $i['text'],
+      category_id: $i['category_id'],
+      description: $i['description'],
+      view_count: $i['view_count'],
+      image_id: $i['image_id'],
+    ), $res);
+  }
+
+  public function countWhereCategory(int $id): int
+  {
+    $res = $this->db->queryOne("SELECT COUNT(*) as cnt FROM {$this->table} WHERE category_id = ?", [$id]);
+    return (int)($res['cnt'] ?? 0);
+  }
+
+  /**
+   * @param int $id
+   * @param string $sort
+   * @param string $order
+   * @param int $limit
+   * @param int $offset
+   * @return Article[]
+   */
+  public function loadWhereCategoryPage(int $id, string $sort, string $order, int $limit, int $offset): array
+  {
+    $sort = in_array($sort, self::SORTABLE_COLUMNS, true) ? $sort : 'created_at';
+    $order = strtoupper($order) === 'ASC' ? 'ASC' : 'DESC';
+    $res = $this->db->query(
+      "SELECT * FROM {$this->table} WHERE category_id = ? ORDER BY {$sort} {$order} LIMIT ? OFFSET ?",
+      [$id, $limit, $offset]
+    );
     return array_map(fn($i) => new Article(
       id: $i['id'],
       name: $i['name'],

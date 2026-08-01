@@ -8,7 +8,7 @@
             <div class="container">
                 <div class="category__header">
                     <h2 class="category__title">{$d['category']->getName()}</h2>
-                    <a href="#" class="view-all">View All</a>
+                    <a href="/category?id={$d['category']->getId()}" class="view-all">View All</a>
                 </div>
 
                 <div class="card-grid">

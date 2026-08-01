@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controller\CategoryController;
 use App\Controller\ErrorController;
 use App\Controller\HomeController;
 use App\Entities\Article;
@@ -59,10 +60,16 @@ class App
       $this->repoArticle,
       $this->serviceImage
     );
+    $controllerCategory = new CategoryController(
+      $view,
+      $this->repoCategory,
+      $this->repoArticle,
+      $this->serviceImage
+    );
     $controllerError = new ErrorController($view);
 
     $this->route = new Route();
-    $this->route->initControllers($controllerHome, $controllerError);
+    $this->route->initControllers($controllerHome, $controllerCategory, $controllerError);
   }
 
   public function run(): void
@@ -82,9 +89,9 @@ class App
   public function seeder(): void
   {
     $faker = Factory::create();
-    for ($i = 0; $i < 5; $i++) {
+    for ($i = 0; $i < 15; $i++) { // count category
       $category = $this->repoCategory->save(new Category(0, $faker->word, $faker->text));
-      for ($k = 0; $k < 5; $k++) {
+      for ($k = 0; $k < 19; $k++) { // count article
         $image = $this->serviceImage->create();
         $this->repoArticle->save(new Article(
           0,
