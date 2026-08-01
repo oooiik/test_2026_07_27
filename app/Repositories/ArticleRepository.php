@@ -35,6 +35,46 @@ class ArticleRepository
     ), $res);
   }
 
+  public function getById(int $id): ?Article
+  {
+    $res = $this->db->queryOne("SELECT * FROM {$this->table} WHERE id = ?", [$id]);
+    if ($res === false) {
+      return null;
+    }
+    return new Article(
+      id: $res['id'],
+      name: $res['name'],
+      text: $res['text'],
+      category_id: $res['category_id'],
+      description: $res['description'],
+      view_count: $res['view_count'],
+      image_id: $res['image_id'],
+    );
+  }
+
+  /**
+   * @param int $categoryId
+   * @param int $excludeId
+   * @param int $limit
+   * @return Article[]
+   */
+  public function loadSimilar(int $categoryId, int $excludeId, int $limit): array
+  {
+    $res = $this->db->query(
+      "SELECT * FROM {$this->table} WHERE category_id = ? AND id != ? ORDER BY id DESC LIMIT ?",
+      [$categoryId, $excludeId, $limit]
+    );
+    return array_map(fn($i) => new Article(
+      id: $i['id'],
+      name: $i['name'],
+      text: $i['text'],
+      category_id: $i['category_id'],
+      description: $i['description'],
+      view_count: $i['view_count'],
+      image_id: $i['image_id'],
+    ), $res);
+  }
+
   public function countWhereCategory(int $id): int
   {
     $res = $this->db->queryOne("SELECT COUNT(*) as cnt FROM {$this->table} WHERE category_id = ?", [$id]);

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controller\ArticleController;
 use App\Controller\CategoryController;
 use App\Controller\ControllerInterface;
 use App\Controller\ErrorController;
@@ -24,12 +25,14 @@ class Route
   public function initControllers(
     HomeController $homeController,
     CategoryController $categoryController,
+    ArticleController $articleController,
     ErrorController $errorController,
   ): static
   {
     $this->routes = [
       '/' => $homeController,
       '/category' => $categoryController,
+      '/article' => $articleController,
       '*' => $errorController,
     ];
     return $this;

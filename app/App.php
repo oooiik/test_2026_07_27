@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Controller\ArticleController;
 use App\Controller\CategoryController;
 use App\Controller\ErrorController;
 use App\Controller\HomeController;
@@ -66,10 +67,16 @@ class App
       $this->repoArticle,
       $this->serviceImage
     );
+    $controllerArticle = new ArticleController(
+      $view,
+      $this->repoArticle,
+      $this->repoCategory,
+      $this->serviceImage
+    );
     $controllerError = new ErrorController($view);
 
     $this->route = new Route();
-    $this->route->initControllers($controllerHome, $controllerCategory, $controllerError);
+    $this->route->initControllers($controllerHome, $controllerCategory, $controllerArticle, $controllerError);
   }
 
   public function run(): void
