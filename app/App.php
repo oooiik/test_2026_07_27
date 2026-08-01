@@ -14,6 +14,7 @@ use Faker\Factory;
 use League\Flysystem\Filesystem;
 use League\Flysystem\FilesystemOperator;
 use League\Flysystem\Local\LocalFilesystemAdapter;
+use ScssPhp\ScssPhp\Compiler;
 
 class App
 {
@@ -106,6 +107,13 @@ class App
     $this->db->execute('TRUNCATE TABLE categories');
     $this->db->execute('TRUNCATE TABLE images');
     $this->db->execute('SET FOREIGN_KEY_CHECKS = 1');
+  }
+
+  public function compilerCSS()
+  {
+    $compiler = new Compiler();
+    $css = $compiler->compileFile(__ROOT__ . '/resources/scss/style.scss')->getCss();
+    file_put_contents(__ROOT__ . '/public/css/style.css', $css);
   }
 
 }

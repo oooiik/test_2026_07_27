@@ -1,8 +1,3 @@
-/* ==========================================================================
-   Blogy — Category Listing Layout
-   Compiled from resources/smarty source design (style.scss)
-   ========================================================================== */
-
 * {
   box-sizing: border-box;
 }
@@ -13,7 +8,7 @@ html, body {
 }
 
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Helvetica Neue", Arial, sans-serif;
   color: #6b7178;
   background: #ffffff;
   -webkit-font-smoothing: antialiased;
@@ -39,12 +34,10 @@ h1, h2, h3, p {
   padding: 0 30px;
 }
 
-/* ---- Top bar ---- */
 .topbar {
   background: #2c4a5e;
   padding: 20px 0;
 }
-
 .topbar .logo {
   display: inline-block;
   color: #fff;
@@ -52,29 +45,24 @@ h1, h2, h3, p {
   font-weight: 700;
   letter-spacing: 0.3px;
 }
-
 .topbar .logo .dot {
   color: #fff;
 }
 
-/* ---- Category section ---- */
 .category {
   padding: 60px 0 20px;
 }
-
 @media (max-width: 560px) {
   .category {
     padding: 40px 0 10px;
   }
 }
-
 .category__header {
   display: flex;
   align-items: baseline;
   justify-content: space-between;
   margin-bottom: 28px;
 }
-
 .category__title {
   font-size: 14px;
   font-weight: 700;
@@ -89,41 +77,45 @@ h1, h2, h3, p {
   text-decoration: underline;
   white-space: nowrap;
 }
-
 .view-all:hover {
   opacity: 0.7;
 }
 
-/* ---- Card grid ---- */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 30px;
 }
-
 @media (max-width: 900px) {
   .card-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
-
 @media (max-width: 560px) {
   .card-grid {
     grid-template-columns: 1fr;
   }
 }
 
-/* ---- Card ---- */
 .card__image {
   display: block;
   width: 100%;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: 4/3;
   background-color: #f4f4f4;
   background-size: cover;
   background-position: center;
   margin-bottom: 18px;
 }
-
+.card__image--bag {
+  background-image: radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.35), transparent 45%), linear-gradient(135deg, #efe9df 0%, #d8cfc0 55%, #6c1f1f 55%, #4a1414 100%);
+}
+.card__image--portrait {
+  background-image: radial-gradient(circle at 65% 35%, rgba(255, 255, 255, 0.25), transparent 50%), linear-gradient(135deg, #b9c4e8 0%, #7c8fd6 45%, #4a3f78 100%);
+}
+.card__image--coffee {
+  background-image: radial-gradient(circle at 50% 45%, #6b4a2f 0%, #2b2118 55%, #111 100%), linear-gradient(135deg, #9aa1a6 0%, #6d7378 100%);
+  background-blend-mode: normal;
+}
 .card__title {
   font-size: 16px;
   font-weight: 600;
@@ -131,25 +123,21 @@ h1, h2, h3, p {
   color: #1f2d36;
   margin-bottom: 6px;
 }
-
 .card__title a:hover {
   text-decoration: underline;
 }
-
 .card__date {
   display: block;
   font-size: 12px;
   color: #8a8f93;
   margin-bottom: 14px;
 }
-
 .card__excerpt {
   font-size: 13.5px;
   line-height: 1.65;
   color: #6b7178;
   margin-bottom: 16px;
 }
-
 .card__link {
   display: inline-block;
   font-size: 13px;
@@ -157,50 +145,16 @@ h1, h2, h3, p {
   color: #2c4a5e;
   text-decoration: underline;
 }
-
 .card__link:hover {
   opacity: 0.7;
 }
 
-/* ---- 404 ---- */
-.not-found {
-  padding: 120px 0;
-  text-align: center;
-}
-
-.not-found__code {
-  font-size: 72px;
-  font-weight: 700;
-  color: #1f2d36;
-  margin-bottom: 16px;
-}
-
-.not-found__message {
-  font-size: 16px;
-  color: #6b7178;
-  margin-bottom: 32px;
-}
-
-.not-found__link {
-  display: inline-block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #2c4a5e;
-  text-decoration: underline;
-}
-
-.not-found__link:hover {
-  opacity: 0.7;
-}
-
-/* ---- Footer ---- */
 .footer {
   background: #2c4a5e;
   margin-top: 40px;
   padding: 55px 0;
   text-align: center;
 }
-
 .footer p {
   color: rgba(255, 255, 255, 0.85);
   font-size: 13px;

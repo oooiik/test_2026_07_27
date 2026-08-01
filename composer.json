@@ -17,6 +17,7 @@
         "smarty/smarty": "^5.8",
         "fakerphp/faker": "^1.24",
         "league/flysystem-aws-s3-v3": "*",
-        "league/flysystem": "^3.0"
+        "league/flysystem": "^3.0",
+        "scssphp/scssphp": "^2.1"
     }
 }

@@ -5,5 +5,6 @@ require 'bootstrap.php';
 use App\App;
 
 $app = new App();
-$app->fresh();
-$app->seeder();
+//$app->fresh();
+//$app->seeder();
+$app->compilerCSS();
