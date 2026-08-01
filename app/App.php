@@ -42,7 +42,7 @@ class App
     ]);
 
     $dbHost = getenv('MYSQL_HOST');
-    $dbPort = getenv('MYSQL_POST');
+    $dbPort = getenv('MYSQL_PORT');
     $dbDbname = getenv('MYSQL_DATABASE');
     $dbUser = getenv('MYSQL_USER');
     $dbPassword = getenv('MYSQL_PASSWORD');
